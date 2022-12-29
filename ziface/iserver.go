@@ -11,4 +11,5 @@ type IServer interface {
 	SetOnConnStop(func(IConnection))
 	CallOnConnStart(conn IConnection)
 	CallOnConnStop(conn IConnection)
+	Packet() IDataPack
 }

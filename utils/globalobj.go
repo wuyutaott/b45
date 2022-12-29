@@ -1,6 +1,6 @@
 package utils
 
-type GlobalCfg struct {
+type Config struct {
 	Name    string
 	Version string
 	Host    string
@@ -13,10 +13,10 @@ type GlobalCfg struct {
 	MaxMsgChanLen    uint32
 }
 
-var GCfg *GlobalCfg
+var GCfg *Config
 
 func init() {
-	GCfg = &GlobalCfg{
+	GCfg = &Config{
 		Name:             "b45App",
 		Version:          "v1.0",
 		Host:             "0.0.0.0",

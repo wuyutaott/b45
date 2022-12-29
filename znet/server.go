@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/wuyutaott/b45/utils"
 	"github.com/wuyutaott/b45/ziface"
+	"github.com/wuyutaott/b45/zpack"
 	"net"
 )
 
@@ -18,9 +19,24 @@ type Server struct {
 	OnConnStart func(conn ziface.IConnection)
 	OnConnStop  func(conn ziface.IConnection)
 	exitChan    chan struct{}
+	packet      ziface.IDataPack
 }
 
 func NewServer() ziface.IServer {
+	s := &Server{
+		Name:       utils.GCfg.Name,
+		IPVersion:  "tcp4",
+		IP:         utils.GCfg.Host,
+		Port:       utils.GCfg.TCPPort,
+		msgHandler: NewMsgHandler(),
+		ConnMgr:    NewConnManager(),
+		exitChan:   nil,
+		packet:     zpack.Factory().NewPack(ziface.B45DataPack),
+	}
+	return s
+}
+
+func NewUserConfServer(config *utils.Config) ziface.IServer {
 	return nil
 }
 
@@ -125,4 +141,8 @@ func (s *Server) CallOnConnStop(conn ziface.IConnection) {
 		fmt.Println("---> CallOnConnStop")
 		s.OnConnStop(conn)
 	}
+}
+
+func (s *Server) Packet() ziface.IDataPack {
+	return s.packet
 }
