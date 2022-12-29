@@ -6,4 +6,6 @@ type IRequest interface {
 	GetMsgID() uint32
 
 	BindRouter(router IRouter)
+	Next()
+	Abort()
 }

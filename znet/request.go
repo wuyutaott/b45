@@ -6,6 +6,7 @@ type Request struct {
 	conn   ziface.IConnection
 	msg    ziface.IMessage
 	router ziface.IRouter
+	index  int8
 }
 
 func (r *Request) GetConnection() ziface.IConnection {
@@ -22,4 +23,23 @@ func (r *Request) GetMsgID() uint32 {
 
 func (r *Request) BindRouter(router ziface.IRouter) {
 	r.router = router
+}
+
+func (r *Request) Next() {
+	r.index++
+	for r.index < 4 {
+		switch r.index {
+		case 1:
+			r.router.PreHandle(r)
+		case 2:
+			r.router.Handle(r)
+		case 3:
+			r.router.PostHandle(r)
+		}
+		r.index++
+	}
+}
+
+func (r *Request) Abort() {
+	r.index = 4
 }
