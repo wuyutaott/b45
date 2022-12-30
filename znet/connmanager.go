@@ -27,8 +27,8 @@ func (cm *ConnManager) Add(conn ziface.IConnection) {
 
 func (cm *ConnManager) Remove(conn ziface.IConnection) {
 	cm.connLock.Lock()
-	defer cm.connLock.Unlock()
 	delete(cm.connections, conn.GetConnID())
+	cm.connLock.Unlock()
 	fmt.Printf("connection remove connID = %d success! conn num = %d \n", conn.GetConnID(), cm.Len())
 }
 
@@ -49,10 +49,10 @@ func (cm *ConnManager) Len() int {
 
 func (cm *ConnManager) ClearConn() {
 	cm.connLock.Lock()
-	defer cm.connLock.Unlock()
 	for _, conn := range cm.connections {
 		conn.Stop()
 	}
+	cm.connLock.Unlock()
 	fmt.Println("Clear all connection success! conn num =", cm.Len())
 }
 
