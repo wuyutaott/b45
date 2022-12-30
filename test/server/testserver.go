@@ -11,7 +11,7 @@ type PingRouter struct {
 }
 
 func (ping *PingRouter) Handle(request ziface.IRequest) {
-	fmt.Println("receive msg =", string(request.GetMsgID()))
+	fmt.Println("receive msg =", request.GetMsgID(), string(request.GetData()))
 	request.GetConnection().SendMsg(2, []byte("pong"))
 }
 
