@@ -20,8 +20,8 @@ func NewConnManager() *ConnManager {
 
 func (cm *ConnManager) Add(conn ziface.IConnection) {
 	cm.connLock.Lock()
-	defer cm.connLock.Unlock()
 	cm.connections[conn.GetConnID()] = conn
+	cm.connLock.Unlock()
 	fmt.Println("connection add to ConnManager success! conn num =", cm.Len())
 }
 

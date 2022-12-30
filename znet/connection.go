@@ -38,7 +38,7 @@ func NewConnection(server ziface.IServer, conn *net.TCPConn, connID uint32, msgH
 		property:    nil,
 	}
 	c.Server.GetConnMgr().Add(c)
-	return nil
+	return c
 }
 
 func (c *Connection) StartWriter() {
